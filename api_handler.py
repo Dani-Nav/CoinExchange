@@ -33,3 +33,7 @@ def get_exchange_rate(base: str, target: str) -> float:
         raise ValueError(str(ve))
     except Exception as e:
         raise Exception(f"Ocorreu um erro inesperado: {e}")
+    except ValueError as ve:
+        raise ValueError(str(ve))
+    except Exception as e:
+        raise Exception(f"Ocorreu um erro inesperado: {e}")
