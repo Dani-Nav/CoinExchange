@@ -1,32 +1,18 @@
 import requests
-import streamlit as st
 
 def get_exchange_rate(base: str, target: str) -> float:
-    base_upper = base.upper()
-    target_upper = target.upper()
-    url = f"https://open.er-api.com/v6/latest/{base_upper}"
-    try:
-        response = requests.get(url)
-        response.raise_for_status()  # Levanta uma exceção para códigos de status de erro (4xx ou 5xx)
-        data = response.json()
+    base = base.upper()
+    target = target.upper()
 
-        # st.write(data)  # Remover ou comentar após o debug
+    url = f"https://open.er-api.com/v6/latest/{base}"
+    response = requests.get(url)
+    data = response.json()
 
-        if data.get('result') != 'success':
-            raise ValueError(f"Erro ao acessar a API de câmbio: {data.get('error-description', 'Erro desconhecido')}")
+    if data.get("result") != "success":
+        raise ValueError("Erro ao acessar a API de câmbio.")
 
-        rates = data.get('conversion_rates')
-        if rates is None:
-            raise ValueError("Resposta da API não continha as taxas de câmbio.")
+    rates = data.get("conversion_rates", {})
+    if target not in rates:
+        raise ValueError(f"Moeda de destino '{target}' não encontrada.")
 
-        if target_upper not in rates:
-            raise ValueError(f"Moeda de destino '{target_upper}' não encontrada.")
-
-        return rates[target_upper]
-
-    except requests.exceptions.RequestException as e:
-        raise Exception(f"Erro de conexão com a API: {e}")
-    except ValueError as ve:
-        raise ValueError(str(ve))
-    except Exception as e:
-        raise Exception(f"Ocorreu um erro inesperado: {e}")
+    return rates[target]
