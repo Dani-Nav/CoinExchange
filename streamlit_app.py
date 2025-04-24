@@ -1,12 +1,13 @@
 import streamlit as st
-from api_handler import get_exchange_rate
-
+from utils.api_handler import get_exchange_rate
 
 st.set_page_config(page_title="Conversor de Moedas", layout="centered")
 st.title("💱 Conversor de Moedas em Tempo Real")
 
-moeda_origem = st.selectbox("Moeda de origem", ["USD", "EUR", "BRL", "JPY", "GBP"])
-moeda_destino = st.selectbox("Moeda de destino", ["USD", "EUR", "BRL", "JPY", "GBP"])
+moedas = ["USD", "EUR", "BRL", "JPY", "GBP"]
+
+moeda_origem = st.selectbox("Moeda de origem", moedas)
+moeda_destino = st.selectbox("Moeda de destino", moedas)
 quantia = st.number_input("Valor a converter", min_value=0.0, format="%.2f")
 
 if st.button("Converter"):
