@@ -10,8 +10,6 @@ def get_exchange_rate(base: str, target: str) -> float:
         response.raise_for_status()
         data = response.json()
 
-        st.write(data)  # só durante o debug
-
         if data.get('result') != 'success':
             raise ValueError(f"Erro ao acessar a API de câmbio: {data.get('error-description', 'Erro desconhecido')}")
 
