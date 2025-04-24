@@ -6,12 +6,15 @@ def get_exchange_rate(base: str, target: str) -> float:
     response = requests.get(url)
     data = response.json()
 
-    st.write(data)  # 👈 ISSO VAI MOSTRAR A RESPOSTA NA TELA DO APP
+    st.write(data)  # só durante o debug
 
     if data.get('result') != 'success':
         raise ValueError("Erro ao acessar a API de câmbio.")
 
-    if target not in data.get('conversion_rates', {}):
+    rates = data.get('conversion_rates', {})
+    target = target.upper()  # ✅ garantir que está em MAIÚSCULO
+
+    if target not in rates:
         raise ValueError(f"Moeda de destino '{target}' não encontrada.")
 
-    return data['conversion_rates'][target]
+    return rates[target]
