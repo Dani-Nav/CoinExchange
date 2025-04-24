@@ -1,5 +1,5 @@
 import streamlit as st
-from utils.api_handler import get_exchange_rate
+from api_handler.py import get_exchange_rate
 
 st.set_page_config(page_title="Conversor de Moedas", layout="centered")
 st.title("💱 Conversor de Moedas em Tempo Real")
